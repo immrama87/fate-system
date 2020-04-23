@@ -1,0 +1,11 @@
+{
+  "name": "fate-gamesystem",
+  "version": "1.0.0",
+  "description": "An app that will spawn a webserver for managing games and gamestates using the FATE Core game system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "James Miner",
+  "license": "ISC"
+}
