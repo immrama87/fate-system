@@ -1,0 +1,7 @@
+{
+  "driver": "MongoDBDriver",
+  "host": "localhost",
+  "port": 27017,
+  "dbname": "fate-system",
+  "poolsize": 10
+}

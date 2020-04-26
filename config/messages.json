@@ -1,0 +1,22 @@
+{
+  "errors": {
+    "database": {
+      "connection": "Error connecting to %0. Error Message: %1",
+      "configuration":{
+        "driver": "Invalid configuration for %0. '%1...', ':' value(s) are required.",
+        "action": "Invalid %0 construction. '%1...', ':' value(s) are required."
+      },
+      "response": {
+        "multipleforone": "More than one entry found in table '%0' for a findOne query."
+      }
+    },
+    "messages": {
+      "template": "Error getting message content. No template for key '%0' exists.",
+      "nomessage": "Error getting message content. Key '%0' does not refer to a message."
+    }
+  },
+  "database": {
+    "connecting": "Starting %0 database pool",
+    "connected": "Database pool initialized successfully"
+  }
+}
