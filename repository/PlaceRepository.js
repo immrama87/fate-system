@@ -1,5 +1,6 @@
 const q = require('q');
 const RepositoryInterface = require('./RepositoryInterface');
+const FaceRepository = require('./FaceRepository');
 const PlaceModel = require('../model/Place');
 const Executions = require('../db/Executions');
 const repoInterface = new RepositoryInterface('places', PlaceModel);
@@ -59,6 +60,23 @@ router.post('/', (req, res) => {
       console.error(err);
       res.status(500).send(err);
     })
+});
+
+router.get('/:id/faces', (req, res) => {
+  const repo = new FaceRepository();
+  repo.findByPlaceId(req.params.id)
+    .then((response) => {
+      const json = [];
+      let i;
+      for(i=0; i<response.length; i++){
+        json.push(response[i].toJson());
+      }
+      res.send(JSON.stringify(json));
+    })
+    .fail((err) => {
+      console.error(err);
+      res.status(500).send(err);
+    });
 });
 
 PlaceRepository.Router = router;

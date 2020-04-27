@@ -26,7 +26,7 @@ const FaceRepository = (function(){
         for(i=0; i<response.length; i++){
           models.push(new FaceModel(response[i]));
         }
-        deferred.resolve(JSON.stringify(models));
+        deferred.resolve(models);
       })
       .fail(deferred.reject);
 
@@ -41,7 +41,7 @@ const FaceRepository = (function(){
         .addQuery('place', placeId)
         .getQuery(),
       Executions.SortSet.NONE,
-      Executions.FieldsSet.ALL
+      Executions.FieldSet.ALL
     );
 
     Executions.execute(action)
@@ -51,9 +51,11 @@ const FaceRepository = (function(){
         for(i=0; i<response.length; i++){
           models.push(new FaceModel(response[i]));
         }
-        deferred.resolve(JSON.stringify(models));
+        deferred.resolve(models);
       })
       .fail(deferred.reject);
+
+    return deferred.promise;
   }
 
   return repo;
@@ -68,7 +70,8 @@ router.post('/', (req, res) => {
     req.body.name,
     req.body.description,
     req.body.aspect,
-    req.body.place
+    req.body.place,
+    req.body.game
   );
 
   repo.insert(face.toDocument())
