@@ -35,7 +35,8 @@ const UserRepository = (function(){
         else {
           deferred.resolve(null);
         }
-      });
+      })
+      .fail(deferred.reject);
 
     return deferred.promise;
   }
@@ -69,6 +70,10 @@ router.post('/', (req, res) => {
   repo.insert(user.toDocument())
     .then((response) => {
       res.send(JSON.stringify(response));
+    })
+    .fail((err) => {
+      console.error(err);
+      res.status(500).send(err);
     });
 });
 
@@ -88,11 +93,19 @@ router.post('/login', (req, res) => {
               req.session.user = response.getId();
             }
             res.status(status).end();
+          })
+          .fail((err) => {
+            console.error(err);
+            res.status(500).send(err);
           });
       }
       else {
         res.status(401).end();
       }
+    })
+    .fail((err) => {
+      console.error(err);
+      res.status(500).send(err);
     });
 });
 

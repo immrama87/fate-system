@@ -59,6 +59,7 @@ const Game = (function(entry){
     toJson: function(){
       let doc = toDocument();
       doc.id = id;
+      doc.created = new Date(doc.created).toISOString();
       return doc;
     },
     toDocument: toDocument

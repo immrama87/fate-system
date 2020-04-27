@@ -42,6 +42,17 @@ const User = (function(entry){
     password = hashPassword(_password);
   }
 
+  function toDocument(){
+    return {
+      username: username,
+      fn: fn,
+      ln: ln,
+      created: created,
+      secret: secret,
+      password: password
+    };
+  }
+
   return {
     getId: function(){return id;},
     getUsername: function(){return username;},
@@ -52,24 +63,17 @@ const User = (function(entry){
     getCreated: function(){return created;},
     newRecord: newRecord,
     hashPassword: hashPassword,
+    toDocument: toDocument,
     toJson: function(){
-      return {
-        id: id,
-        username: username,
-        fn: fn,
-        ln: ln,
-        created: new Date(created).toISOString()
-      };
-    },
-    toDocument: function(){
-      return {
-        username: username,
-        fn: fn,
-        ln: ln,
-        created: created,
-        secret: secret,
-        password: password
-      };
+      const doc = toDocument();
+      doc.created = new Date(doc.created).toISOString();
+      doc.id = id;
+      doc.password = null;
+      delete doc.password;
+      doc.secret = null;
+      delete doc.secret;
+
+      return doc;
     }
   };
 });

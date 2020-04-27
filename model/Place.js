@@ -55,6 +55,7 @@ const Place = (function(entry){
     toDocument: toDocument,
     toJson: function(){
       let doc = toDocument();
+      doc.created = new Date(doc.created).toISOString();
       doc.id = id;
       return doc;
     }

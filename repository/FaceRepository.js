@@ -1,10 +1,60 @@
+const q = require('q');
 const RepositoryInterface = require('./RepositoryInterface');
 const FaceModel = require('../model/Face');
+const Executions = require('../db/Executions');
 const repoInterface = new RepositoryInterface('faces', FaceModel);
 
 const FaceRepository = (function(){
   const repo = {};
   repoInterface.implements(repo);
+
+  repo.findByGameId = function(gameId){
+    const deferred = q.defer();
+    const action = new Executions.ReadAction(
+      'faces',
+      new Executions.QuerySet()
+        .addQuery('game', gameId)
+        .getQuery(),
+      Executions.SortSet.NONE,
+      Executions.FieldSet.ALL
+    );
+
+    Executions.execute(action)
+      .then((response) => {
+        const models = [];
+        let i;
+        for(i=0; i<response.length; i++){
+          models.push(new FaceModel(response[i]));
+        }
+        deferred.resolve(JSON.stringify(models));
+      })
+      .fail(deferred.reject);
+
+    return deferred.promise;
+  }
+
+  repo.findByPlaceId = function(placeId){
+    const deferred = q.defer();
+    const action = new Executions.ReadAction(
+      'faces',
+      new Executions.QuerySet()
+        .addQuery('place', placeId)
+        .getQuery(),
+      Executions.SortSet.NONE,
+      Executions.FieldsSet.ALL
+    );
+
+    Executions.execute(action)
+      .then((response) => {
+        const models = [];
+        let i;
+        for(i=0; i<response.length; i++){
+          models.push(new FaceModel(response[i]));
+        }
+        deferred.resolve(JSON.stringify(models));
+      })
+      .fail(deferred.reject);
+  }
 
   return repo;
 });
@@ -24,6 +74,10 @@ router.post('/', (req, res) => {
   repo.insert(face.toDocument())
     .then((response) => {
       res.send(JSON.stringify(response));
+    })
+    .fail((err) => {
+      console.error(err);
+      res.status(500).send(err);
     });
 });
 

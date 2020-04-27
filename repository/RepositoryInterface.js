@@ -39,7 +39,8 @@ const RepositoryInterface = (function(table, model){
         else {
           deferred.resolve(null);
         }
-      });
+      })
+      .fail(deferred.reject);
 
     return deferred.promise;
   }
@@ -67,7 +68,8 @@ const RepositoryInterface = (function(table, model){
           }
         }
         deferred.resolve(models);
-      });
+      })
+      .fail(deferred.reject);
 
     return deferred.promise;
   }
@@ -157,6 +159,10 @@ const RepositoryInterface = (function(table, model){
               json[i] = responses[i].toJson();
             }
             res.send(JSON.stringify(json));
+          })
+          .fail((err) => {
+            console.error(err);
+            res.status(500).send(err);
           });
       });
 
@@ -179,6 +185,9 @@ const RepositoryInterface = (function(table, model){
             else {
               res.status(404).send();
             }
+          })
+          .fail((err) => {
+            res.status(500).send(err);
           });
       });
 
@@ -186,6 +195,9 @@ const RepositoryInterface = (function(table, model){
         updateOneById(req.params.id, req.body)
           .then((response, err) => {
             res.send(`${response} documents updated.`);
+          })
+          .fail((err) => {
+            res.status(500).send(err);
           });
       });
 
@@ -193,6 +205,9 @@ const RepositoryInterface = (function(table, model){
         deleteOneById(req.params.id)
           .then((response) => {
             res.send(`${response} documents deleted.`);
+          })
+          .fail((err) => {
+            res.status(500).send(err);
           });
       });
 

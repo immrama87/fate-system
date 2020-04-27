@@ -28,7 +28,8 @@ const PlaceRepository = (function(){
         }
 
         deferred.resolve(models);
-      });
+      })
+      .fail(deferred.reject);
 
     return deferred.promise;
   }
@@ -53,7 +54,11 @@ router.post('/', (req, res) => {
   repo.insert(place.toDocument())
     .then((response) => {
       res.send(JSON.stringify(response));
-    });
+    })
+    .fail((err) => {
+      console.error(err);
+      res.status(500).send(err);
+    })
 });
 
 PlaceRepository.Router = router;

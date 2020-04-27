@@ -1,5 +1,6 @@
 const RepositoryInterface = require('./RepositoryInterface');
 const PlaceRepository = require('./PlaceRepository');
+const FaceRepository = require('./FaceRepository');
 const GameModel = require('../model/Game');
 const IssueModel = require('../model/Issue');
 const repoInterface = new RepositoryInterface('games', GameModel);
@@ -38,6 +39,27 @@ router.get('/:id/places', (req, res) => {
         json.push(response[i].toJson());
       }
       res.send(JSON.stringify(json));
+    })
+    .fail((err) => {
+      console.error(err);
+      res.status(500).send(err);
+    });
+});
+
+router.get('/:id/faces', (req, res) => {
+  const repo = new FaceRepository();
+  repo.findByGameId(req.params.id)
+    .then((response) => {
+      const json = [];
+      let i;
+      for(i=0; i<response.length; i++){
+        json.push(response[i].toJson());
+      }
+      res.send(JSON.stringify(json));
+    })
+    .fail((err) => {
+      console.error(err);
+      res.status(500).send(err);
     });
 });
 
@@ -59,8 +81,16 @@ router.post('/:id/issues', (req, res) => {
         repo.updateOneById(req.params.id, {issues: response.getIssues()})
           .then((updated) => {
             res.send(`${updated} documents updated.`);
+          })
+          .fail((err) => {
+            console.error(err);
+            res.status(500).send(err);
           });
       }
+    })
+    .fail((err) => {
+      console.error(err);
+      res.status(500).send(err);
     });
 });
 
@@ -79,7 +109,6 @@ router.put('/:id/issues/:issueid', (req, res) => {
       }
       else {
         let issues = response.getIssues();
-        console.log(issues);
         let i;
         for(i=0; i<issues.length; i++){
           if(issues[i].id == req.params.issueId) break;
@@ -95,12 +124,20 @@ router.put('/:id/issues/:issueid', (req, res) => {
           repo.updateOneById(req.params.id, response.toDocument())
             .then((updated) => {
               res.send(`${updated} documents updated.`);
-            });
+            })
+            .fail((err) => {
+              console.error(err);
+              res.status(500).send(err);
+            })
         }
         else {
           res.status(404).end();
         }
       }
+    })
+    .fail((err) => {
+      console.error(err);
+      res.status(500).send(err);
     });
 });
 
@@ -124,12 +161,20 @@ router.delete('/:id/issues/:issueid', (req, res) => {
           repo.updateOneById(req.params.id, response.toDocument())
             .then((updated) => {
               res.end(`${updated} documents updated.`);
+            })
+            .fail((err) => {
+              console.error(err);
+              res.status(500).send(err);
             });
         }
         else {
           res.status(404).end();
         }
       }
+    })
+    .fail((err) => {
+      console.error(err);
+      res.status(500).send(err);
     });
 });
 

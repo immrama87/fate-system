@@ -1,6 +1,6 @@
 {
   "driver": "MongoDBDriver",
-  "host": "localhost",
+  "host": "localhost1",
   "port": 27017,
   "dbname": "fate-system",
   "poolsize": 10
