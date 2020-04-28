@@ -5,6 +5,7 @@ const Place = (function(entry){
       game,
       issue,
       parent,
+      imageUris = [],
       created;
 
   if(entry){
@@ -14,6 +15,7 @@ const Place = (function(entry){
     game = entry.game;
     issue = entry.issue;
     parent = entry.parent;
+    imageUris = entry.imageUris;
     created = entry.created;
   }
   else {
@@ -34,6 +36,7 @@ const Place = (function(entry){
       game: game,
       issue: issue,
       parent: parent,
+      imageUris: imageUris,
       created: created
     };
   }
@@ -50,6 +53,8 @@ const Place = (function(entry){
     setIssue: function(_issue){issue = _issue;},
     getParent: function(){return parent;},
     setParent: function(_parent){parent = _parent;},
+    getImageUris: function(){return imageUris;},
+    setImageUris: function(_imageUris){imageUris = _imageUris;},
     getCreated: function(){return created;},
     newRecord: newRecord,
     toDocument: toDocument,

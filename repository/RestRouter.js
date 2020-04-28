@@ -4,6 +4,8 @@ const UserRepository = require('./UserRepository');
 const GameRepository = require('./GameRepository');
 const PlaceRepository = require('./PlaceRepository');
 const FaceRepository = require('./FaceRepository');
+const SkillRepository = require('./SkillRepository');
+const CharacterRepository = require('./CharacterRepository');
 const Executions = require('../db/Executions');
 
 const router = express.Router();
@@ -50,5 +52,7 @@ router.use('/users', UserRepository.Router);
 router.use('/games', GameRepository.Router);
 router.use('/places', PlaceRepository.Router);
 router.use('/faces', FaceRepository.Router);
+router.use('/skills', SkillRepository.Router);
+router.use('/characters', CharacterRepository.Router);
 
 module.exports = router;

@@ -5,6 +5,7 @@ const Game = (function(entry){
       setting,
       issues,
       gm,
+      imageUri,
       created;
 
   if(entry){
@@ -14,6 +15,7 @@ const Game = (function(entry){
     setting = entry.setting;
     issues = entry.issues;
     gm = entry.gm;
+    imageUri = entry.imageUri;
     created = entry.created;
   }
   else {
@@ -34,6 +36,7 @@ const Game = (function(entry){
       setting: setting,
       created: created,
       gm: gm,
+      imageUri: imageUri,
       issues: issues || []
     };
   }
@@ -54,6 +57,8 @@ const Game = (function(entry){
     },
     getGM: function(){return gm;},
     setGM: function(_gm){gm = _gm;},
+    getImageUri: function(){return imageUri;},
+    setImageUri: function(_imageUri){imageUri = _imageUri;},
     getCreated: function(){return created;},
     newRecord: newRecord,
     toJson: function(){

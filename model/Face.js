@@ -5,6 +5,7 @@ const Face = (function(entry){
       aspect,
       place,
       game,
+      imageUris = [],
       created;
 
   if(entry){
@@ -14,6 +15,7 @@ const Face = (function(entry){
     aspect = entry.aspect;
     place = entry.place;
     game = entry.game;
+    imageUris = entry.imageUris;
     created = entry.created;
   }
   else {
@@ -35,6 +37,7 @@ const Face = (function(entry){
       aspect: aspect,
       place: place,
       game: game,
+      imageUris: imageUris,
       created: created
     };
   }
@@ -51,6 +54,8 @@ const Face = (function(entry){
     setPlace: function(_place){place = _place;},
     getGame: function(){return game;},
     setGame: function(_game){game = _game;},
+    getImageUris: function(){return imageUris;},
+    setImageUris: function(_imageUris){imageUris = _imageUris;},
     getCreated: function(){return created;},
     newRecord: newRecord,
     toDocument: toDocument,

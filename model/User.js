@@ -7,6 +7,7 @@ const User = (function(entry){
       fn,
       ln,
       created,
+      imageUri,
       secret;
 
   if(entry){
@@ -15,6 +16,7 @@ const User = (function(entry){
     fn = entry.fn;
     ln = entry.ln;
     created = entry.created;
+    imageUri = entry.imageUri;
     secret = entry.secret;
   }
   else {
@@ -60,6 +62,8 @@ const User = (function(entry){
     setFirstName: function(_fn){fn = _fn;},
     getLastName: function(){return ln;},
     setLastName: function(_ln){ln = _ln;},
+    getImageUri: function(){return imageUri;},
+    setImageUri: function(_imageUri){imageUri = _imageUri;},
     getCreated: function(){return created;},
     newRecord: newRecord,
     hashPassword: hashPassword,
